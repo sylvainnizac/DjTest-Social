@@ -1,13 +1,20 @@
 {% extends "skeleton.html" %}
 {% block content %}
 
-    <p><a href="{% url 'wall' user.id %}">Accéder à votre profil</a></p>
-    <div class="profil">
+    <section class="profil">
+        <article>
+            <a href="{% url 'wall' user.id %}">Accéder à votre profil</a>
+        </article>
     {% for profil in profils %}
-        <p><a href="{% url 'wall' profil.id %}">{{ profil.user }}</a></p>
+        <article>
+            <figure>
+                <img class="avatar" src="{{ profil.avatar.url }}" alt="avatar de {{ profil.user }}" />
+            </figure>
+            <a href="{% url 'wall' profil.id %}">{{ profil.user }}</a>
+        </article>
     {% empty %}
-        <p>Aucun utilisateur.</p>
-    </div>
+        <article>Aucun utilisateur.</article>
+    </section>
     {% endfor %}
 
 {% endblock %}

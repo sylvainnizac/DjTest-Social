@@ -1,4 +1,20 @@
 header, footer
 {
+    background-color : silver;
+}
+
+footer
+{
     text-align : center;
+}
+
+nav
+{
+    text-align : right;
+}
+
+.avatar
+{
+    max-height : 100px;
+    max-width : 100px;
 }
