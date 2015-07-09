@@ -1,0 +1,13 @@
+{% extends "skeleton.html" %}
+{% block content %}
+
+    <p><a href="{% url 'wall' user.id %}">Accéder à votre profil</a></p>
+    <div class="profil">
+    {% for profil in profils %}
+        <p><a href="{% url 'wall' profil.id %}">{{ profil.user }}</a></p>
+    {% empty %}
+        <p>Aucun utilisateur.</p>
+    </div>
+    {% endfor %}
+
+{% endblock %}

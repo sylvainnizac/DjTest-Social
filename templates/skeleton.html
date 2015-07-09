@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+        <title>{% block title %}The super social network!{% endblock %}</title>
+    </head>
+    <body>
+        <header>Be social</header>
+        
+        <nav>
+            {% block nav %}
+            <ul>
+                <li><a href="/admin/">Admin</a></li>
+                <li><a href="/social/deconnexion">Deconnexion</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'wall' user.id %}">Ton profil</a></li>
+                <li><a href="{% url 'namebook' %}">Liste des profils</a></li>
+                {% endif %}
+            </ul>
+            {% endblock %}
+        </nav>
+        
+        <section id="content">
+            {% block content %}{% endblock %}
+        </section>
+        
+        <footer>&copy; Be social by Sylvain</footer>
+    </body>
+</html>

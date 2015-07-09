@@ -1,0 +1,14 @@
+{% extends "skeleton.html" %}
+{% block content %}
+
+    <p>Bonjour {{ user.username }}</p>
+    <div class="profil">
+    {% for message in messages %}
+        <p>{{ message.message }}</a></p>
+    {% empty %}
+        <p>Aucun message.</p>
+    </div>
+    {% endfor %}
+
+{% endblock %}
+
