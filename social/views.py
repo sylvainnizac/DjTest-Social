@@ -17,7 +17,15 @@ class List_Profils(ListView):
     template_name="social/profils.html"
     
     def get_queryset(self):
+        """Recover all profils except the logged user profil"""
         return Profil.objects.filter(~Q(user=self.request.user.id))
+        
+    def get_context_data(self, **kwargs):
+        """Recover data specific to the logged user"""
+        context = super(List_Profils, self).get_context_data(**kwargs)
+        #add the new context data
+        context['logged'] = Profil.objects.filter(user=self.request.user.id)
+        return context
 
 class List_Messages(ListView):
     """
