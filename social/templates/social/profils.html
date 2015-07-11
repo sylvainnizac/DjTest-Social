@@ -4,19 +4,19 @@
     <section class="profil">
     {% for log in logged %}
         <article>
-            <figure>
+            <figure class="profil">
                 <img class="avatar" src="{{ log.avatar.url }}" alt="avatar de {{ log.user }}" />
             </figure>
-            <a href="{% url 'wall' log.id %}">Accéder à votre mur</a>
+            <a href="{% url 'wall' log.id %}" class="profil">Accéder à votre mur</a>
         </article>
     {% endfor %}
     
     {% for profil in profils %}
         <article>
-            <figure>
+            <figure class="profil">
                 <img class="avatar" src="{{ profil.avatar.url }}" alt="avatar de {{ profil.user }}" />
             </figure>
-            <a href="{% url 'wall' profil.id %}">mur de {{ profil.user }}</a>
+            <a href="{% url 'wall' profil.id %}" class="profil">mur de {{ profil.user }}</a>
         </article>
     {% empty %}
         <article>Aucun autre utilisateur.</article>
