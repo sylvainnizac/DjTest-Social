@@ -23,7 +23,7 @@ class List_Profils(ListView):
     def get_context_data(self, **kwargs):
         """Recover data specific to the logged user"""
         context = super(List_Profils, self).get_context_data(**kwargs)
-        #add the new context data
+        # add the new context data
         context['logged'] = Profil.objects.filter(user=self.request.user.id)
         return context
 
@@ -43,6 +43,10 @@ class List_Messages(ListView):
     def get_context_data(self, **kwargs):
         """recover and modify the context data to add the list of categories"""
         context = super(List_Messages, self).get_context_data(**kwargs)
-        #add the new context data
+        # add the new context data
         context['messages'] = list(chain(context['messages'], OtherWallMessage.objects.filter(receiver=self.kwargs['owner'])))
+        # sort all data by date, most recent first
+        context['messages'].sort(key=lambda x: x.date, reverse=True)
+        # add the owner data, in order to compare with the logged user
+        context['owners'] = Profil.objects.filter(user=self.kwargs['owner'])
         return context

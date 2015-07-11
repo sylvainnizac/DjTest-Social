@@ -1,13 +1,25 @@
 {% extends "skeleton.html" %}
 {% block content %}
 
-    <p>Bonjour {{ user.username }}</p>
-    <div class="profil">
+    {% for owner in owners %}
+        {% ifequal user.id owner.id %}
+            <p>Bienvenu sur votre mur de messages</p>
+        {% else %}
+            <p>Bienvenu sur le mur des messages de {{ owner.user }}</p>
+        {% endifequal %}
+    {% endfor %}
+
+    <article>
     {% for message in messages %}
-        <p>{{ message.message }}</a></p>
+            {% ifequal user.username message.owner.user.username %}
+                <p>{{ message.owner.user.username }}</p>
+            {% else %}
+                <p>{{ message.owner.user.username }} => {{ message.receiver.user.username }}</p>
+            {% endifequal %}
+        <p>{{ message.message }}</p>
     {% empty %}
         <p>Aucun message.</p>
-    </div>
+    </article>
     {% endfor %}
 
 {% endblock %}

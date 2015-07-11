@@ -16,7 +16,8 @@ class Profil(models.Model):
     (FEMME, "Femme"),
     (AUTRE, "Non défini"),
     )
-    user = models.OneToOneField(User, unique = True)  # La liaison OneToOne vers le modèle User
+
+    user = models.OneToOneField(User, unique = True)  # OneToOne to model User
     sexe = models.CharField(max_length=1, choices=SEXE, default=AUTRE)
     avatar = models.ImageField(default="defaut.png", upload_to="avatars/")
 
