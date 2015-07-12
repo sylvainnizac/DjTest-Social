@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         {% load static %}
         <link rel="stylesheet" href="{% static 'css/style.css' %}" />
         <title>{% block title %}The super social network!{% endblock %}</title>
@@ -11,7 +12,7 @@
         <nav>
             {% block nav %}
                 <a href="/admin/">Admin</a>
-                <a href="/social/deconnexion">Deconnexion</a>
+                <a href="/social/deconnexion">Déconnexion</a>
                 {% if user.is_authenticated %}
                 <a href="{% url 'wall' user.id %}">Ton profil</a>
                 <a href="{% url 'namebook' %}">Liste des profils</a>

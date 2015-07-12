@@ -1,9 +1,10 @@
 from itertools import chain
-from django.shortcuts import render
+from django.core.urlresolvers import reverse_lazy, reverse
+from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.db.models import Q
 from social.models import MyWallMessage, OtherWallMessage, Profil, CommentMyWall, CommentOtherWall
-from social.forms import NewCom
+from social.forms import NewComMyWall
 
 # Create your views here.
 
@@ -51,21 +52,21 @@ class List_Messages(ListView):
         # recover comments
         context['commentaires'] = CommentMyWall.objects.filter(sender_id=self.kwargs['owner'])
         context['commentaires2'] = CommentOtherWall.objects.filter(receiver_id=self.kwargs['owner'])
-        form = NewCom()
+        form = NewComMyWall()
         context['formu'] = form
         return context
 
-def leave_comment(request):
+def leave_comment(request, id_message):
     """path for new comment creation"""
     #POST is used to return form data
     if request.method == 'POST':
-        #name_article = get_object_or_404(Article, id = id_article)
-        form = NewCom(request.POST)
+        sender = request.user.id
+        form = NewComMyWall(request.POST, sender=sender, id_message=id_message)
         if form.is_valid():
-            #form.save()
-            return render(request, "social/wall.html",)
+            form.save()
+            return redirect('wall', request.user.id)
     #no POST data so certainly first instance of the page
     else:
-        form = NewCom()
+        form = NewComMyWall()
 
-    return render(request, "social/wall.html", {'formu' : form})
+    return redirect('wall', request.user.id)

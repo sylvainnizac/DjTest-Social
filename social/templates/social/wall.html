@@ -50,7 +50,7 @@
                 {% endfor %}
             {% endifequal %}
             </div>
-            <form action="{% url 'social.views.leave_comment' %}" method="post">
+            <form action="/social/comms/{{ message.id }}" method="post">
                 {% csrf_token %}
                 {{ formu.as_p }}
                 <input type="submit" value="Submit" />
