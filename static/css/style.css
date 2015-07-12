@@ -43,5 +43,10 @@ a
 
 .comm_area
 {
-    border: solid black 1px;
+    border: solid silver 1px;
+}
+
+.old_comms
+{
+    border-bottom: dashed silver 1px;
 }

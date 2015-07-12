@@ -7,9 +7,9 @@
         <title>{% block title %}The super social network!{% endblock %}</title>
     </head>
     <body>
-        <header>Be social
-        
-        <nav>
+        <header>
+            <h1>Be social</h1>
+            <nav>
             {% block nav %}
                 <a href="/admin/">Admin</a>
                 <a href="/social/deconnexion">Déconnexion</a>
@@ -19,7 +19,7 @@
                 {% endif %}
             
             {% endblock %}
-        </nav>
+            </nav>
         </header>
         
         <section id="content">

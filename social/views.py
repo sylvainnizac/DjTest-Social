@@ -1,6 +1,5 @@
 from itertools import chain
-from django.core.urlresolvers import reverse_lazy, reverse
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.db.models import Q
 from social.models import Message, Profil, Comment

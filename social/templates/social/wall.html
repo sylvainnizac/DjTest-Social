@@ -1,5 +1,6 @@
 {% extends "skeleton.html" %}
 {% block content %}
+    {% load humanize %}
 
     {% for owner in owners %}
         {% ifequal user.id owner.id %}
@@ -16,26 +17,29 @@
             {% ifequal owner.user.username message.owner.user.username %}
                 <aside class="message_profil">
                     <p>{{ message.owner.user.username }}</p>
-                    <p>{{ message.date }}</p>
+                    <p>{{ message.date|naturalday:"DATE_FORMAT" }}</p>
                 </aside>
             {% else %}
                 <aside class="message_profil">
                     <p>{{ message.owner.user.username }} => {{ message.receiver.user.username }}</p>
-                    <p>{{ message.date }}</p>
+                    <p>{{ message.date|naturalday:"DATE_FORMAT" }}</p>
                 </aside>
             {% endifequal %}
         <p>{{ message.message }}</p>
 
         <aside class="comm_area">
-            <div>
-                {% for commentaire in commentaires %}
-                    {% ifequal message.id commentaire.message_id %}
-                        <p>{{ commentaire.description }}</p>
-                    {% endifequal %}
-                {% empty %}
+            {% for commentaire in commentaires %}
+                {% ifequal message.id commentaire.message_id %}
+                    <div class="old_comms">
+                        <p><strong>{{ commentaire.sender }}</strong> : {{ commentaire.description }}</p>
+                        <p>{{ commentaire.date|naturaltime }}</p>
+                    </div>
+                {% endifequal %}
+            {% empty %}
+                <div class="old_comms">
                     <p>pas de commentaires du tout!</p>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
             <form action="/social/comms/{{ message.id }}" method="post">
                 {% csrf_token %}
                 {{ formu.as_p }}
