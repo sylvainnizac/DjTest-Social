@@ -11,8 +11,7 @@ urlpatterns = patterns('social.views',
     url(r'^deconnexion$', auth_views.logout, {"next_page" : "accueil"}, name="deconnexion"),
     url(r'^namebook$', List_Profils.as_view(), name="namebook"),
     url(r'^messages/(?P<owner>\d+)$', List_Messages.as_view(), name="wall"),
-    url(r'^commsu/(?P<id_message>\d+)$', 'leave_comment', name="commu"),
-    url(r'^commsa/(?P<id_message>\d+)$', 'leave_commentOther', name="comma"),
+    url(r'^comms/(?P<id_message>\d+)$', 'leave_comment', name="comm"),
 )
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

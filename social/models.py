@@ -29,25 +29,10 @@ class Message(models.Model):
     Abstract Message model
     """
     owner = models.ForeignKey('Profil', verbose_name="Rédacteur du message")
+    receiver = models.ForeignKey('Profil', verbose_name="Mur où apparait le message", related_name="mess_receiver")
     message = models.TextField(verbose_name="Votre message")
     date = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Date du message")
     message_visible = models.BooleanField(default = True)
-    
-    class Meta:
-        abstract = True
-
-class MyWallMessage(Message):
-    """
-    All messages written on your wall
-    """
-    def __str__(self):
-        return "{}".format(self.pk)
-
-class OtherWallMessage(Message):
-    """
-    All messages writen on another wall
-    """
-    receiver = models.ForeignKey('Profil', verbose_name="Mur où apparait le message", related_name="receiver")
     
     def __str__(self):
         return "{}".format(self.pk)
@@ -57,28 +42,11 @@ class Comment(models.Model):
     Table of comments
     """
     sender = models.ForeignKey('Profil', verbose_name="Rédacteur du commentaire")
+    receiver = models.ForeignKey('Profil', verbose_name="Destinataire du commentaire", related_name="comm_receiver")
+    message = models.ForeignKey('Message', verbose_name="Message lié")
     description = models.TextField(verbose_name="Votre commentaire")
     date = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Date du commentaire")
     commentaire_visible = models.BooleanField(default = True)
-
-    class Meta:
-        abstract = True
-
-class CommentMyWall(Comment):
-    """
-    All comments linked to MyWallMessage
-    """
-    message = models.ForeignKey('MyWallMessage', verbose_name="Message lié")
-
-    def __str__(self):
-        return "{}".format(self.pk)
-
-class CommentOtherWall(Comment):
-    """
-    All Comments linked to OtherWallMessage
-    """
-    message = models.ForeignKey('OtherWallMessage', verbose_name="Message lié")
-    receiver = models.ForeignKey('Profil', verbose_name="Destinataire du commentaire", related_name="comm_receiver")
 
     def __str__(self):
         return "{}".format(self.pk)
