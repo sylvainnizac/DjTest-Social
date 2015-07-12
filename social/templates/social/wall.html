@@ -28,12 +28,10 @@
 
         <aside class="comm_area">
             <div>
-            {% ifequal user.username message.owner.user.username %}
+            {% ifequal owner.user.username message.owner.user.username %}
                 {% for commentaire in commentaires %}
                     {% ifequal message.id commentaire.message_id %}
                         <p>{{ commentaire.description }}</p>
-                    {% else %}
-                        <p>pas de commentaires pour le moment</p>
                     {% endifequal %}
                 {% empty %}
                     <p>pas de commentaires du tout!</p>
@@ -42,19 +40,26 @@
                 {% for commentaire in commentaires2 %}
                     {% ifequal message.id commentaire.message_id %}
                         <p>{{ commentaire.description }}</p>
-                    {% else %}
-                        <p>pas de commentaires pour le moment</p>
                     {% endifequal %}
                 {% empty %}
                     <p>pas de commentaires du tout!</p>
                 {% endfor %}
             {% endifequal %}
             </div>
-            <form action="/social/comms/{{ message.id }}" method="post">
-                {% csrf_token %}
-                {{ formu.as_p }}
-                <input type="submit" value="Submit" />
-            </form>
+
+            {% ifequal owner.user.username message.owner.user.username %}
+                <form action="/social/commsu/{{ message.id }}" method="post">
+                    {% csrf_token %}
+                    {{ formu.as_p }}
+                    <input type="submit" value="Submit" />
+                </form>
+            {% else %}
+                <form action="/social/commsa/{{ message.id }}" method="post">
+                    {% csrf_token %}
+                    {{ forma.as_p }}
+                    <input type="submit" value="Submit" />
+                </form>
+            {% endifequal %}
         </aside>
     {% empty %}
         <p>Aucun message.</p>

@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 from django import forms
-from social.models import CommentMyWall, Profil, MyWallMessage
+from social.models import CommentMyWall, Profil, MyWallMessage, CommentOtherWall, OtherWallMessage
 
 
 class ConnectProfil(forms.Form):
@@ -34,4 +34,33 @@ class NewComMyWall(forms.ModelForm):
 
     class Meta:
         model = CommentMyWall
+        fields = ('description', )
+
+class NewComOtherWall(forms.ModelForm):
+    """form to add a comment, save is redefined to include the foreign keys"""
+    def __init__(self, *args, **kwargs):
+        # On passe la foreign_key en paramètre à partir de la view
+        k = 'sender'
+        if k in kwargs:
+            self.sender = Profil.objects.filter(id=kwargs.pop('sender'))
+        k = 'id_message'
+        if k in kwargs:
+            self.message = OtherWallMessage.objects.filter(id=kwargs.pop('id_message'))
+            temp = self.message[0]
+            self.receiver = temp.receiver
+        super(NewComOtherWall, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        # On sauve sans faire la requête SQL (commit=False) pour
+        # pouvoir ajouter à l'instance la foreignkey
+        super(NewComOtherWall, self).save(commit=False)
+        # On ajoute à l'instance la foreignkey
+        self.instance.sender = self.sender[0]
+        self.instance.message = self.message[0]
+        self.instance.receiver = self.receiver
+        # On peut maintenant sauver
+        super(NewComOtherWall, self).save(commit)
+
+    class Meta:
+        model = CommentOtherWall
         fields = ('description', )
