@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as OriginalUserAdmin
 from django.contrib.auth.models import User
-from social.models import Profil, MyWallMessage, Comment, OtherWallMessage
+from social.models import Profil, MyWallMessage, CommentMyWall, OtherWallMessage, CommentOtherWall
 
 class ProfilInline(admin.StackedInline):
     """"""
@@ -117,6 +117,41 @@ class CommentAdmin(admin.ModelAdmin):
     # En-tête de notre colonne
     apercu_description.short_description = 'Aperçu du commentaire'
 
+class CommentAdmin2(admin.ModelAdmin):
+    list_display   = ('sender', 'receiver', 'message', 'apercu_description', 'date', 'commentaire_visible',)
+    list_filter    = ('sender', 'message', )
+    date_hierarchy = 'date'
+    ordering       = ('-date', )
+    search_fields  = ('sender', 'message', 'date', )
+
+        # Configuration du formulaire d'édition
+    fieldsets = (
+        # Fieldset 1 : meta-info (message lié au commentaire)
+       ('Général',
+       {'fields': ('sender', 'receiver', 'message'), }),
+        # Fieldset 2 : contenu de l'article
+        ('Commentaire',
+        { 'description': 'Le formulaire n\'accepte pas les balises HTML.',
+        'fields': ('description', )}),
+        # Fieldset 3 : modération
+        ('Modération',
+        { 'fields': ('commentaire_visible', )}),
+    )
+
+    def apercu_description(self, commentaire):
+        """
+        Retourne les 40 premiers caractères du contenu du commentaire. S'il
+        y a plus de 40 caractères, il faut ajouter des points de suspension.
+        """
+        text = commentaire.description[0:40]
+        if len(commentaire.description) > 40:
+            return '%s…' % text
+        else:
+            return text
+
+    # En-tête de notre colonne
+    apercu_description.short_description = 'Aperçu du commentaire'
+
 # Register your models here.
 try:
     admin.site.unregister(User)
@@ -125,5 +160,6 @@ finally:
 
 admin.site.register(MyWallMessage, MessageAdmin)
 admin.site.register(OtherWallMessage, OtherWallMessageAdmin)
-admin.site.register(Comment, CommentAdmin)
+admin.site.register(CommentMyWall, CommentAdmin)
+admin.site.register(CommentOtherWall, CommentAdmin2)
 admin.site.register(Profil, ProfilAdmin2)

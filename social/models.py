@@ -22,7 +22,7 @@ class Profil(models.Model):
     avatar = models.ImageField(default="defaut.png", upload_to="avatars/")
 
     def __str__(self):
-        return "Profil de {0}".format(self.user.username)
+        return self.user.username
 
 class Message(models.Model):
     """
@@ -36,13 +36,12 @@ class Message(models.Model):
     class Meta:
         abstract = True
 
-
 class MyWallMessage(Message):
     """
     All messages written on your wall
     """
     def __str__(self):
-        return "Message de {}".format(self.owner)
+        return "{}".format(self.pk)
 
 class OtherWallMessage(Message):
     """
@@ -51,17 +50,35 @@ class OtherWallMessage(Message):
     receiver = models.ForeignKey('Profil', verbose_name="Mur où apparait le message", related_name="receiver")
     
     def __str__(self):
-        return "Message de {} à {}".format(self.owner, self.receiver)
+        return "{}".format(self.pk)
 
 class Comment(models.Model):
     """
     Table of comments
     """
     sender = models.ForeignKey('Profil', verbose_name="Rédacteur du commentaire")
-    message = models.ForeignKey('MyWallMessage', verbose_name="Message lié")
     description = models.TextField(verbose_name="Votre commentaire")
     date = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Date du commentaire")
     commentaire_visible = models.BooleanField(default = True)
-    
+
+    class Meta:
+        abstract = True
+
+class CommentMyWall(Comment):
+    """
+    All comments linked to MyWallMessage
+    """
+    message = models.ForeignKey('MyWallMessage', verbose_name="Message lié")
+
     def __str__(self):
-        return "Commentaire de {}".format(self.sender)
+        return "{}".format(self.pk)
+
+class CommentOtherWall(Comment):
+    """
+    All Comments linked to OtherWallMessage
+    """
+    message = models.ForeignKey('OtherWallMessage', verbose_name="Message lié")
+    receiver = models.ForeignKey('Profil', verbose_name="Destinataire du commentaire", related_name="comm_receiver")
+
+    def __str__(self):
+        return "{}".format(self.pk)

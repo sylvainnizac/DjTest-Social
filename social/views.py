@@ -1,10 +1,9 @@
-from django.core.urlresolvers import reverse, reverse_lazy
-from django.shortcuts import render, redirect
-from django.contrib.auth.views import logout
+from itertools import chain
+from django.shortcuts import render
 from django.views.generic import ListView
 from django.db.models import Q
-from itertools import chain
-from social.models import MyWallMessage, OtherWallMessage, Profil
+from social.models import MyWallMessage, OtherWallMessage, Profil, CommentMyWall, CommentOtherWall
+from social.forms import NewCom
 
 # Create your views here.
 
@@ -49,4 +48,24 @@ class List_Messages(ListView):
         context['messages'].sort(key=lambda x: x.date, reverse=True)
         # add the owner data, in order to compare with the logged user
         context['owners'] = Profil.objects.filter(user=self.kwargs['owner'])
+        # recover comments
+        context['commentaires'] = CommentMyWall.objects.filter(sender_id=self.kwargs['owner'])
+        context['commentaires2'] = CommentOtherWall.objects.filter(receiver_id=self.kwargs['owner'])
+        form = NewCom()
+        context['formu'] = form
         return context
+
+def leave_comment(request):
+    """path for new comment creation"""
+    #POST is used to return form data
+    if request.method == 'POST':
+        #name_article = get_object_or_404(Article, id = id_article)
+        form = NewCom(request.POST)
+        if form.is_valid():
+            #form.save()
+            return render(request, "social/wall.html",)
+    #no POST data so certainly first instance of the page
+    else:
+        form = NewCom()
+
+    return render(request, "social/wall.html", {'formu' : form})

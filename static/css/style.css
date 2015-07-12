@@ -29,3 +29,19 @@ a
     text-decoration: none;
     color: black;
 }
+
+.message
+{
+    margin-left: 50px;
+}
+
+.message_profil
+{
+    display: inline-block;
+    margin: 0;
+}
+
+.comm_area
+{
+    border: solid black 1px;
+}

@@ -7,20 +7,60 @@
         {% else %}
             <p>Bienvenu sur le mur des messages de {{ owner.user }}</p>
         {% endifequal %}
-    {% endfor %}
 
-    <article>
+    <article class="message">
     {% for message in messages %}
-            {% ifequal user.username message.owner.user.username %}
-                <p>{{ message.owner.user.username }}</p>
+                <figure class="message_profil">
+                    <img class="avatar" src="{{ message.owner.avatar.url }}" alt="avatar de {{ message.owner.user }}" />
+                </figure>
+            {% ifequal owner.user.username message.owner.user.username %}
+                <aside class="message_profil">
+                    <p>{{ message.owner.user.username }}</p>
+                    <p>{{ message.date }}</p>
+                </aside>
             {% else %}
-                <p>{{ message.owner.user.username }} => {{ message.receiver.user.username }}</p>
+                <aside class="message_profil">
+                    <p>{{ message.owner.user.username }} => {{ message.receiver.user.username }}</p>
+                    <p>{{ message.date }}</p>
+                </aside>
             {% endifequal %}
         <p>{{ message.message }}</p>
+
+        <aside class="comm_area">
+            <div>
+            {% ifequal user.username message.owner.user.username %}
+                {% for commentaire in commentaires %}
+                    {% ifequal message.id commentaire.message_id %}
+                        <p>{{ commentaire.description }}</p>
+                    {% else %}
+                        <p>pas de commentaires pour le moment</p>
+                    {% endifequal %}
+                {% empty %}
+                    <p>pas de commentaires du tout!</p>
+                {% endfor %}
+            {% else %}
+                {% for commentaire in commentaires2 %}
+                    {% ifequal message.id commentaire.message_id %}
+                        <p>{{ commentaire.description }}</p>
+                    {% else %}
+                        <p>pas de commentaires pour le moment</p>
+                    {% endifequal %}
+                {% empty %}
+                    <p>pas de commentaires du tout!</p>
+                {% endfor %}
+            {% endifequal %}
+            </div>
+            <form action="{% url 'social.views.leave_comment' %}" method="post">
+                {% csrf_token %}
+                {{ formu.as_p }}
+                <input type="submit" value="Submit" />
+            </form>
+        </aside>
     {% empty %}
         <p>Aucun message.</p>
     </article>
     {% endfor %}
 
+    {% endfor %}
 {% endblock %}
 
