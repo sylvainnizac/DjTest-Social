@@ -15,8 +15,7 @@ nav
 
 .avatar
 {
-    max-height : 50px;
-    max-width : 50px;
+    height : 67px;
 }
 
 .profil
@@ -32,13 +31,26 @@ a
 
 .message
 {
-    margin-left: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-bottom: 20px;
 }
 
 .message_profil
 {
     display: inline-block;
     margin: 0;
+}
+
+.profil_detail
+{
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.mess_data
+{
+    margin-bottom: 10px;
 }
 
 .comm_area
@@ -49,4 +61,39 @@ a
 .old_comms
 {
     border-bottom: dashed silver 1px;
+}
+
+.submit_button
+{
+    float: right;
+    height: 50px;
+    width: 150px;
+    color: #ffffff;
+    border-radius: 15px;
+    background: linear-gradient(
+        #000000 0%,
+        #828c95 24%,
+        #ccc6c3 41%,
+        #000000 100%); /* W3C */
+}
+
+.submit_button:hover
+{
+    background: linear-gradient(
+        #ccc6c3 0%,
+        #828c95 24%,
+        #000000 41%,
+        #7f7f7f 100%); /* W3C */
+}
+
+.id_description
+{
+    height: 50px;
+    width: 90%;
+    overflow: auto;
+}
+
+.comm_form
+{
+    margin-top: 10px
 }

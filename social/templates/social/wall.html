@@ -9,47 +9,51 @@
             <p>Bienvenu sur le mur des messages de {{ owner.user }}</p>
         {% endifequal %}
 
-    <article class="message">
-    {% for message in messages %}
-                <figure class="message_profil">
-                    <img class="avatar" src="{{ message.owner.avatar.url }}" alt="avatar de {{ message.owner.user }}" />
-                </figure>
-            {% ifequal owner.user.username message.owner.user.username %}
-                <aside class="message_profil">
-                    <p>{{ message.owner.user.username }}</p>
-                    <p>{{ message.date|naturalday:"DATE_FORMAT" }}</p>
-                </aside>
-            {% else %}
-                <aside class="message_profil">
-                    <p>{{ message.owner.user.username }} => {{ message.receiver.user.username }}</p>
-                    <p>{{ message.date|naturalday:"DATE_FORMAT" }}</p>
-                </aside>
-            {% endifequal %}
-        <p>{{ message.message }}</p>
+        {% for message in messages %}
+            <section class="message">
+                <article class="mess_data">
+                    <figure class="message_profil">
+                        <img class="avatar" src="{{ message.owner.avatar.url }}" alt="avatar de {{ message.owner.user }}" />
+                    </figure>
+                    {% ifequal owner.user.username message.owner.user.username %}
+                    <aside class="message_profil">
+                        <p class="profil_detail">{{ message.owner.user.username }}</p>
+                        <p class="profil_detail">{{ message.date|naturalday:"DATE_FORMAT" }}</p>
+                    </aside>
+                    {% else %}
+                    <aside class="message_profil">
+                        <p class="profil_detail">{{ message.owner.user.username }} => {{ message.receiver.user.username }}</p>
+                        <p class="profil_detail">{{ message.date|naturalday:"DATE_FORMAT" }}</p>
+                    </aside>
+                    {% endifequal %}
+                </article>
 
-        <aside class="comm_area">
-            {% for commentaire in commentaires %}
-                {% ifequal message.id commentaire.message_id %}
-                    <div class="old_comms">
-                        <p><strong>{{ commentaire.sender }}</strong> : {{ commentaire.description }}</p>
-                        <p>{{ commentaire.date|naturaltime }}</p>
+                <article class="mess_data">{{ message.message }}</article>
+
+                <article class="comm_area">
+                    {% for commentaire in commentaires %}
+                        {% ifequal message.id commentaire.message_id %}
+                        <div class="old_comms">
+                            <p><strong>{{ commentaire.sender }}</strong> : {{ commentaire.description }}</p>
+                            <p>{{ commentaire.date|naturaltime }}</p>
+                        </div>
+                        {% endifequal %}
+                    {%  endfor %}
+
+                    <div class="comm_form">
+                        <form action="/social/comms/{{ message.id }}" method="post">
+                            {% csrf_token %}
+                            {{ formu }}
+                             <input type="submit" value="Submit" class="submit_button"/>
+                        </form>
                     </div>
-                {% endifequal %}
-            {% empty %}
-                <div class="old_comms">
-                    <p>pas de commentaires du tout!</p>
-                </div>
-            {% endfor %}
-            <form action="/social/comms/{{ message.id }}" method="post">
-                {% csrf_token %}
-                {{ formu.as_p }}
-                <input type="submit" value="Submit" />
-            </form>
-        </aside>
-    {% empty %}
-        <p>Aucun message.</p>
-    </article>
-    {% endfor %}
+                </article>
+            </section>
+        {% empty %}
+            <article class="message">
+                <p>Aucun message.</p>
+            </article>
+        {% endfor %}
 
     {% endfor %}
 {% endblock %}

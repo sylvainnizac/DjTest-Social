@@ -38,3 +38,5 @@ class NewCom(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('description', )
+        widgets = {'description': forms.Textarea(attrs={'placeholder': 'Votre commentaire', 'class' : 'id_description'})}
+        labels = {'description' : ""}

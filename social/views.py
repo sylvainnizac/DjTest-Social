@@ -51,9 +51,10 @@ class List_Messages(ListView):
         context['owners'] = Profil.objects.filter(user=self.kwargs['owner'])
         # recover comments
         context['commentaires'] = Comment.objects.filter(sender_id=self.kwargs['owner'])
-
+        # creating empty form
         formu = NewCom()
         context['formu'] = formu
+        context['flag'] = 0
         return context
 
 def leave_comment(request, id_message):
