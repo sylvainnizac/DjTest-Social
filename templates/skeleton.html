@@ -11,11 +11,11 @@
             <h1>Be social</h1>
             <nav>
             {% block nav %}
-                <a href="/admin/">Admin</a>
-                <a href="/social/deconnexion">Déconnexion</a>
+                <a href="/admin/" class="links">Admin</a>
+                <a href="/social/deconnexion" class="links">Déconnexion</a>
                 {% if user.is_authenticated %}
-                <a href="{% url 'wall' user.id %}">Ton profil</a>
-                <a href="{% url 'namebook' %}">Liste des profils</a>
+                <a href="{% url 'wall' user.id %}" class="links">Ton profil</a>
+                <a href="{% url 'namebook' %}" class="links">Liste des profils</a>
                 {% endif %}
             
             {% endblock %}

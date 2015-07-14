@@ -12,6 +12,7 @@ urlpatterns = patterns('social.views',
     url(r'^namebook$', List_Profils.as_view(), name="namebook"),
     url(r'^messages/(?P<owner>\d+)$', List_Messages.as_view(), name="wall"),
     url(r'^comms/(?P<id_message>\d+)$', 'leave_comment', name="comm"),
+    url(r'^mess/(?P<receiver>\d+)$', 'leave_message', name="mess"),
 )
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

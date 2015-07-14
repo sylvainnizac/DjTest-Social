@@ -1,3 +1,9 @@
+html, body
+{
+    height: 100%;
+    margin: 0;
+}
+
 header, footer
 {
     background-color : silver;
@@ -8,9 +14,29 @@ footer
     text-align : center;
 }
 
+header
+{
+    padding-top: 10px;
+    margin-bottom: 20px;
+}
+
+h1
+{
+    margin-top: 0;
+    margin-left: 10px;
+    margin-bottom: 0;
+}
+
 nav
 {
     text-align : right;
+    padding-bottom: 10px;
+}
+
+.links
+{
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .avatar
@@ -53,6 +79,8 @@ a
     margin-bottom: 10px;
 }
 
+/*cadre de commentaires, formulaire et affichage des commentaires*/
+
 .comm_area
 {
     border: solid silver 1px;
@@ -63,6 +91,11 @@ a
     border-bottom: dashed silver 1px;
 }
 
+.comm_form
+{
+    margin-top: 10px;
+}
+
 .submit_button
 {
     float: right;
@@ -71,19 +104,17 @@ a
     color: #ffffff;
     border-radius: 15px;
     background: linear-gradient(
-        #000000 0%,
-        #828c95 24%,
-        #ccc6c3 41%,
-        #000000 100%); /* W3C */
+        #ccc6c3 0%,
+        #828c95 50%,
+        #ccc6c3 100%); /* W3C */
 }
 
 .submit_button:hover
 {
     background: linear-gradient(
-        #ccc6c3 0%,
-        #828c95 24%,
-        #000000 41%,
-        #7f7f7f 100%); /* W3C */
+        #828c95 0%,
+        #ccc6c3 50%,
+        #828c95 100%); /* W3C */
 }
 
 .id_description
@@ -93,7 +124,19 @@ a
     overflow: auto;
 }
 
-.comm_form
+.mess_area
 {
-    margin-top: 10px
+    border: solid silver 1px;
+}
+
+.mess_title
+{
+    border-bottom: dashed silver 1px;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.mess_form
+{
+     margin-top: 10px;
 }

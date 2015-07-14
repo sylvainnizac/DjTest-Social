@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.db.models import Q
 from social.models import Message, Profil, Comment
-from social.forms import NewCom
+from social.forms import NewCom, NewMess
 
 
 # Create your views here.
@@ -54,7 +54,8 @@ class List_Messages(ListView):
         # creating empty form
         formu = NewCom()
         context['formu'] = formu
-        context['flag'] = 0
+        messu = NewMess()
+        context['messu'] = messu
         return context
 
 def leave_comment(request, id_message):
@@ -66,8 +67,19 @@ def leave_comment(request, id_message):
         if form.is_valid():
             form.save()
             return redirect('wall', request.user.id)
-    #no POST data so certainly first instance of the page
-    else:
-        form = NewCom()
 
     return redirect('wall', request.user.id)
+
+def leave_message(request, receiver):
+    """
+    New wall message creation
+    More comments in leave_comment
+    """
+    if request.method == 'POST':
+        owner = request.user.id
+        form = NewMess(request.POST, receiver=receiver, owner=owner)
+        if form.is_valid():
+            form.save()
+            return redirect('wall', receiver)
+
+    return redirect('wall', receiver)

@@ -3,11 +3,30 @@
     {% load humanize %}
 
     {% for owner in owners %}
-        {% ifequal user.id owner.id %}
-            <p>Bienvenu sur votre mur de messages</p>
+        <section class="message">
+            <article class="mess_area">
+                {% ifequal user.id owner.id %}
+            <p class="mess_title">Laissez un message sur votre mur</p>
+            <div class="mess_form">
+                        <form action="/social/mess/{{ user.id }}" method="post">
+                            {% csrf_token %}
+                            {{ messu }}
+                             <input type="submit" value="Submit" class="submit_button"/>
+                        </form>
+                    </div>
         {% else %}
-            <p>Bienvenu sur le mur des messages de {{ owner.user }}</p>
+            <p>Laissez un message sur le mur de {{ owner.user }}</p>
+            <div class="mess_form">
+                        <form action="/social/mess/{{ owner.id }}" method="post">
+                            {% csrf_token %}
+                            {{ messu }}
+                             <input type="submit" value="Submit" class="submit_button"/>
+                        </form>
+                    </div>
         {% endifequal %}
+            </article>
+        </section>
+
 
         {% for message in messages %}
             <section class="message">
