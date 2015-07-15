@@ -5,7 +5,7 @@
     {% for owner in owners %}
         <section class="message">
             <article class="mess_area">
-                {% ifequal user.id owner.id %}
+                {% ifequal user.id owner.user.id %}
             <p class="mess_title">Laissez un message sur votre mur</p>
             <div class="mess_form">
                         <form action="/social/mess/{{ user.id }}" method="post">
@@ -17,7 +17,7 @@
         {% else %}
             <p>Laissez un message sur le mur de {{ owner.user }}</p>
             <div class="mess_form">
-                        <form action="/social/mess/{{ owner.id }}" method="post">
+                        <form action="/social/mess/{{ owner.user.id }}" method="post">
                             {% csrf_token %}
                             {{ messu }}
                              <input type="submit" value="Submit" class="submit_button"/>
@@ -27,21 +27,22 @@
             </article>
         </section>
 
+{% load avatar %}
 
         {% for message in messages %}
             <section class="message">
                 <article class="mess_data">
                     <figure class="message_profil">
-                        <img class="avatar" src="{{ message.owner.avatar.url }}" alt="avatar de {{ message.owner.user }}" />
+                        <img class="avatar" src="{% avatar message.owner.id %}" alt="avatar de {{ message.owner }}" />
                     </figure>
-                    {% ifequal owner.user.username message.owner.user.username %}
+                    {% ifequal owner.user.username message.owner.username %}
                     <aside class="message_profil">
-                        <p class="profil_detail">{{ message.owner.user.username }}</p>
+                        <p class="profil_detail">{{ message.owner.username }}</p>
                         <p class="profil_detail">{{ message.date|naturalday:"DATE_FORMAT" }}</p>
                     </aside>
                     {% else %}
                     <aside class="message_profil">
-                        <p class="profil_detail">{{ message.owner.user.username }} => {{ message.receiver.user.username }}</p>
+                        <p class="profil_detail">{{ message.owner.username }} => {{ message.receiver.username }}</p>
                         <p class="profil_detail">{{ message.date|naturalday:"DATE_FORMAT" }}</p>
                     </aside>
                     {% endifequal %}

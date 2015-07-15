@@ -16,7 +16,8 @@ class NewCom(forms.ModelForm):
         # extracting data
         k = 'sender'
         if k in kwargs:
-            self.sender = Profil.objects.filter(id=kwargs.pop('sender'))
+            self.sender = Profil.objects.filter(user_id=kwargs.pop('sender'))
+            self.sender = self.sender[0]
         k = 'id_message'
         if k in kwargs:
             self.message = Message.objects.filter(id=kwargs.pop('id_message'))
@@ -29,7 +30,7 @@ class NewCom(forms.ModelForm):
         # pouvoir ajouter à l'instance la foreignkey
         super(NewCom, self).save(commit=False)
         # On ajoute à l'instance les foreignkeys
-        self.instance.sender = self.sender[0]
+        self.instance.sender = self.sender.user
         self.instance.message = self.message[0]
         self.instance.receiver = self.receiver
         # On peut maintenant sauver
@@ -47,10 +48,12 @@ class NewMess(forms.ModelForm):
         # extracting parameters data
         k ='owner'
         if k in kwargs:
-            self.owner = Profil.objects.filter(id=kwargs.pop('owner'))
+            self.owner = Profil.objects.filter(user_id=kwargs.pop('owner'))
+            self.owner = self.owner[0]
         k ='receiver'
         if k in kwargs:
-            self.receiver = Profil.objects.filter(id=kwargs.pop('receiver'))
+            self.receiver = Profil.objects.filter(user_id=kwargs.pop('receiver'))
+            self.receiver = self.receiver[0]
         super(NewMess, self).__init__(*args, **kwargs)
 
     def save(self, commit=True):
@@ -58,8 +61,8 @@ class NewMess(forms.ModelForm):
         # pouvoir ajouter à l'instance la foreignkey
         super(NewMess, self).save(commit=False)
         # adding foreignkeys
-        self.instance.owner = self.owner[0]
-        self.instance.receiver = self.receiver[0]
+        self.instance.owner = self.owner.user
+        self.instance.receiver = self.receiver.user
         # now saving
         super(NewMess, self).save(commit)
 
