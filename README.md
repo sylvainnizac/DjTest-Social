@@ -1,13 +1,16 @@
 # DjTest-Social
 one small Social Network
 
-no sign in page
 log in/out OK
 wall messages visualisation OK
-wall message add KO
+wall message add OK
 comments visualisation OK
-comments add KO
+comments add OK
 
-style... in progress, just ugly actually
+style... not really nice, but...
 
 Work still in progress
+
+next:
+new user registration
+security... for now nearly 0 security...
