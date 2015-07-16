@@ -105,6 +105,11 @@ STATIC_URL = '/static/'
 # then in these dirs, here the global static dir
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 
-#media files (images, video,...)
+
+# media files (images, video,...)
 MEDIA_ROOT = os.path.join(BASE_DIR, '/static/social/img/')
 MEDIA_URL = "/static/social/img/"
+
+
+# login url, used by @login_required (not only but in this case)
+LOGIN_URL = ''
