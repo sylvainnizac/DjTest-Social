@@ -2,12 +2,13 @@ from itertools import chain
 from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 from social.models import Message, Profil, Comment
 from social.forms import NewCom, NewMess
 
-
 # Create your views here.
 
+@login_required
 class List_Profils(ListView):
     """
     This class recover all Profils
@@ -27,6 +28,7 @@ class List_Profils(ListView):
         context['logged'] = Profil.objects.filter(user=self.request.user.id)
         return context
 
+@login_required
 class List_Messages(ListView):
     """
     This class allows to quickly call the article list. and return other useful data for the page
@@ -58,6 +60,7 @@ class List_Messages(ListView):
         context['messu'] = messu
         return context
 
+@login_required
 def leave_comment(request, id_message):
     """path for new comment creation"""
     #POST is used to return form data
@@ -70,6 +73,7 @@ def leave_comment(request, id_message):
 
     return redirect('wall', request.user.id)
 
+@login_required
 def leave_message(request, receiver):
     """
     New wall message creation
