@@ -12,8 +12,8 @@
             <nav>
             {% block nav %}
                 <a href="/admin/" class="links">Admin</a>
-                <a href="/social/deconnexion" class="links">Déconnexion</a>
                 {% if user.is_authenticated %}
+                <a href="/social/deconnexion" class="links">Déconnexion</a>
                 <a href="{% url 'wall' user.id %}" class="links">Ton profil</a>
                 <a href="{% url 'namebook' %}" class="links">Liste des profils</a>
                 {% endif %}

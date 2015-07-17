@@ -1,3 +1,5 @@
+/* All templates */
+
 html, body
 {
     height: 100%;
@@ -33,10 +35,32 @@ nav
     padding-bottom: 10px;
 }
 
+/*######################################*/
+/* skeleton.html */
+
 .links
 {
+    text-decoration: none;
+    color: black;
     margin-left: 10px;
     margin-right: 10px;
+}
+
+/*######################################*/
+/* connect.html */
+
+.accueil
+{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/*######################################*/
+/* profils.html */
+
+.profil
+{
+    display: inline-block;
 }
 
 .avatar
@@ -44,16 +68,8 @@ nav
     height : 67px;
 }
 
-.profil
-{
-    display: inline-block;
-}
-
-a
-{
-    text-decoration: none;
-    color: black;
-}
+/*######################################*/
+/* wall.html */
 
 .message
 {
@@ -62,38 +78,23 @@ a
     margin-bottom: 20px;
 }
 
-.message_profil
-{
-    display: inline-block;
-    margin: 0;
-}
+/* wall messages */
 
-.profil_detail
-{
-    font-weight: bold;
-    margin-bottom: 0;
-}
-
-.mess_data
-{
-    margin-bottom: 10px;
-}
-
-/*cadre de commentaires, formulaire et affichage des commentaires*/
-
-.comm_area
+.mess_area
 {
     border: solid silver 1px;
 }
 
-.old_comms
+.mess_title
 {
     border-bottom: dashed silver 1px;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
 }
 
-.comm_form
+.mess_form
 {
-    margin-top: 10px;
+     margin-top: 10px;
 }
 
 .submit_button
@@ -117,6 +118,43 @@ a
         #828c95 100%); /* W3C */
 }
 
+.mess_data
+{
+    margin-bottom: 10px;
+}
+
+.message_profil
+{
+    display: inline-block;
+    margin: 0;
+}
+
+.profil_detail
+{
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+/* comments */
+
+.comm_area
+{
+    border: solid silver 1px;
+}
+
+.old_comms
+{
+    border-bottom: dashed silver 1px;
+}
+
+.comm_form
+{
+    margin-top: 10px;
+}
+
+/*######################################*/
+/* views.py NewMess & NewComm to be found in wall.html */
+
 .id_description
 {
     height: 50px;
@@ -124,19 +162,7 @@ a
     overflow: auto;
 }
 
-.mess_area
-{
-    border: solid silver 1px;
-}
 
-.mess_title
-{
-    border-bottom: dashed silver 1px;
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-}
 
-.mess_form
-{
-     margin-top: 10px;
-}
+
+

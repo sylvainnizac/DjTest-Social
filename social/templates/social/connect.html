@@ -1,5 +1,6 @@
 {% extends "skeleton.html" %}
 {% block content %}
+    <article class="accueil">
     {% if error %}
         <p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
     {% endif %}
@@ -14,4 +15,5 @@
             <input type="hidden" name="next" value="namebook" />
         </form>
     {% endif %}
+    </article>
 {% endblock %}

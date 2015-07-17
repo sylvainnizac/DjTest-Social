@@ -1,14 +1,37 @@
 from itertools import chain
-from django.shortcuts import redirect
+from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect, render
 from django.views.generic import ListView
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from social.models import Message, Profil, Comment
-from social.forms import NewCom, NewMess
+from social.forms import NewCom, NewMess, ConnectProfil
+
 
 # Create your views here.
 
-@login_required
+def connexion(request):
+    error = False
+
+    if request.method == "POST":
+        form = ConnectProfil(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(username=username, password=password)  # check username/password validity
+            if user:  # If OK, i.e. not None
+                login(request, user)  # connecting
+                if request.user.is_superuser:
+                    error = True
+                    return redirect('deconnexion')
+
+            else: # return wrong user/pwd error
+                error = True
+    else:
+        form = ConnectProfil()
+
+    return render(request, 'social/connect.html', locals())
+
 class List_Profils(ListView):
     """
     This class recover all Profils
@@ -28,7 +51,6 @@ class List_Profils(ListView):
         context['logged'] = Profil.objects.filter(user=self.request.user.id)
         return context
 
-@login_required
 class List_Messages(ListView):
     """
     This class allows to quickly call the article list. and return other useful data for the page
