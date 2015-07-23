@@ -1,0 +1,11 @@
+{% extends "skeleton.html" %}
+{% block content %}
+    <article class="">
+        <form method="post" action=".">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Créer" />
+            <input type="hidden" name="next" value="namebook" />
+        </form>
+    </article>
+{% endblock %}
