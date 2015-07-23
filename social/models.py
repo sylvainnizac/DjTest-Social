@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Profil(models.Model):
     """
-    User profile, juste a little modification from standard one
+    User profile, just a little modification from standard one
     """
     HOMME = "H"
     FEMME = "F"

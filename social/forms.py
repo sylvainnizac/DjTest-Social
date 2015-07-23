@@ -14,12 +14,12 @@ class CreateProfil(forms.ModelForm):
     """
     Profil creation form
     """
-    username = forms.CharField(label="Nom d'utilisateur", max_length=30, required=True)
-    prenom = forms.CharField(label="Prénom", max_length=30)
-    nom = forms.CharField(label="Nom", max_length=30)
+    username = forms.CharField(label="Nom d'utilisateur", max_length=30)
+    prenom = forms.CharField(label="Prénom", max_length=30, required=False)
+    nom = forms.CharField(label="Nom", max_length=30, required=False)
     email = forms.EmailField(label="E-mail")
-    password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput, required=True)
-    confirm_password = forms.CharField(label="Confirmer mot de passe", widget=forms.PasswordInput, required=True)
+    password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
+    confirm_password = forms.CharField(label="Confirmer mot de passe", widget=forms.PasswordInput)
 
     class Meta:
         model = Profil

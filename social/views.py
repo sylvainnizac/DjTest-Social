@@ -1,5 +1,6 @@
 from itertools import chain
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.views.generic import ListView
 from django.db.models import Q
@@ -38,8 +39,31 @@ def user_creation(request):
     """
     User creation
     """
+    error = False
+    if request.method == "POST":
+        form = CreateProfil(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            prenom = form.cleaned_data["prenom"]
+            nom = form.cleaned_data["nom"]
+            sexe = form.cleaned_data["sexe"]
+            email = form.cleaned_data["email"]
+            avatar = form.cleaned_data["avatar"]
+            password = form.cleaned_data["password"]
+            confirm_password = form.cleaned_data["confirm_password"]
 
-    form = CreateProfil()
+            if password != confirm_password:
+                error = True
+                msg = "Veuillez vérifier le mot de passe."
+            else:
+                user = User.objects.create_user(username=username, email=email, password=password, first_name=prenom, last_name=nom)
+                user.save()
+                # to be implemented, non-unique user error catch
+                profil = Profil(user.id, sexe, avatar)
+                profil.save()
+                return redirect('accueil')
+    else:
+        form = CreateProfil()
 
     return render(request, 'social/creation.html', locals())
 
