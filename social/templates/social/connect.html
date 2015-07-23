@@ -5,6 +5,10 @@
         <p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
     {% endif %}
 
+    {% if created %}
+        <p><strong>Compte créé, vous pouvez dès maintenant vous connecter!</strong></p>
+    {% endif %}
+
     {% if user.is_authenticated %}
         Vous êtes connecté, {{ user.username }} !
     {% else %}
@@ -14,6 +18,7 @@
             <input type="submit" value="Se connecter" />
             <input type="hidden" name="next" value="namebook" />
         </form>
+        <a href="{% url 'creation' %}" >Pas encore inscrit?</a>
     {% endif %}
     </article>
 {% endblock %}

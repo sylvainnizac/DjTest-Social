@@ -5,14 +5,16 @@ from django.views.generic import ListView
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from social.models import Message, Profil, Comment
-from social.forms import NewCom, NewMess, ConnectProfil
+from social.forms import NewCom, NewMess, ConnectProfil, CreateProfil
 
 
 # Create your views here.
 
 def connexion(request):
+    """
+    User connection
+    """
     error = False
-
     if request.method == "POST":
         form = ConnectProfil(request.POST)
         if form.is_valid():
@@ -25,12 +27,21 @@ def connexion(request):
                     error = True
                     return redirect('deconnexion')
 
-            else: # return wrong user/pwd error
+            else: # wrong user/pwd error
                 error = True
     else:
         form = ConnectProfil()
 
     return render(request, 'social/connect.html', locals())
+
+def user_creation(request):
+    """
+    User creation
+    """
+
+    form = CreateProfil()
+
+    return render(request, 'social/creation.html', locals())
 
 class List_Profils(ListView):
     """

@@ -1,6 +1,7 @@
 {% extends "skeleton.html" %}
 {% block content %}
     {% load humanize %}
+    {% load avatar %}
 
     {% for owner in owners %}
         <section class="message">
@@ -26,8 +27,6 @@
         {% endifequal %}
             </article>
         </section>
-
-{% load avatar %}
 
         {% for message in messages %}
             <section class="message">
